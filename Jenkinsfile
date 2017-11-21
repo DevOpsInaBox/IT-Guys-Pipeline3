@@ -18,8 +18,8 @@ node {
       def lines=readFile('Deployfile').trim().split("\n");
       app=lines[1].split(':')[1].trim()
       env=lines[2].split(':')[1].trim() 
-						app=app.replaceAll(~/^\"+/, "") 
-						app=app.replaceAll(~/\"+$/, "")    
+						app=app.substring(1)
+						app=app.substring(app.length()-1)   
       
       echo "**********************************************************************************"    
       echo "* Moving $app from Integration to Testing from Development"
