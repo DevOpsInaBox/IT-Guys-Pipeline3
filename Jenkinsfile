@@ -48,7 +48,8 @@ node {
       echo "* Running Testcases for $app in Integration"
       echo "**********************************************************************************"
       def command = 'uname'
-      def sout = new StringBuilder(), serr = new StringBuilder()
+      def sout = ""
+						def serr = ""
       def proc = command.execute()
       proc.consumeProcessOutput(sout, serr)
       proc.waitForOrKill(1000)
