@@ -61,7 +61,7 @@ node {
       echo "* Moving $app from Integration to Testing"
       echo "**********************************************************************************"
 						
-      data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Integration","Move to Test");
+      data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Integration","Move to Testing");
       println(data[0]);
       println(data[1]);
       
