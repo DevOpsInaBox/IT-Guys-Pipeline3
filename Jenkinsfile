@@ -48,7 +48,11 @@ node {
       echo "* Running Testcases for $app in Integration"
       echo "**********************************************************************************"
       def command = 'uname'
-      def output = ['bash', '-c', command].execute().in.text
+      def sout = new StringBuilder(), serr = new StringBuilder()
+      def proc = command.execute()
+      proc.consumeProcessOutput(sout, serr)
+      proc.waitForOrKill(1000)
+      println "out> $sout err> $serr"
     }  
     
 }
