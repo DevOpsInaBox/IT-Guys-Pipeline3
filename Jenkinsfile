@@ -47,8 +47,8 @@ node {
       echo "**********************************************************************************"
       echo "* Running Testcases for $app in Integration"
       echo "**********************************************************************************"
-      def ret = sh(script: 'uname', returnStdout: true)
-      println ret
+      def command = 'uname'
+      def output = ['bash', '-c', command].execute().in.text
     }  
     
 }
