@@ -32,7 +32,7 @@ node {
       echo "* Moving $app from Integration to Testing from Development"
       echo "**********************************************************************************"
 						
-      def data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Development","Move to Integration");
+      data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Development","Move to Integration");
       println(data[0]);
       println(data[1]);
       
@@ -47,7 +47,8 @@ node {
       echo "**********************************************************************************"
       echo "* Running Testcases for $app in Integration"
       echo "**********************************************************************************"
-      sh "runtestcases.py --app \"${app}\" --env Integration"
+      cmd = "runtestcases.py --app \"${app}\" --env Integration"
+						sh cmd
     }  
     
 }
