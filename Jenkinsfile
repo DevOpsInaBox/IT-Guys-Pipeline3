@@ -23,9 +23,23 @@ node {
       echo "* Moving $app from Integration to Testing from Development"
       echo "**********************************************************************************"
 						
-      def data = dh.moveApplication("http://rocket:8080","admin","admin", "IT Guys;4" ,"GLOBAL.My Pipeline.Development","Move to Integration");
+      def data = dh.moveApplication("http://rocket:8080","admin","admin", "${app}" ,"GLOBAL.My Pipeline.Development","Move to Integration");
       println(data[0]);
       println(data[1]);
       
-   }
+      echo "**********************************************************************************"    
+      echo "* Deploying $app to Integration"
+      echo "**********************************************************************************"
+						
+						data = dh.deployApplication("http://rocket:8080","admin","admin","${app}","IT Guys Int");
+      println(data[0]);
+      println(data[1]);
+						
+      echo "**********************************************************************************"
+      echo "* Running Testcases for $app in Integration"
+      echo "**********************************************************************************"
+      cmd = /runtestcases.py --app ${app} --env Integration/
+      sh cmd
+    }  
+    
 }
