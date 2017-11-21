@@ -1,9 +1,12 @@
 #!/usr/bin/env groovy
 
+@Library('deployhub') _
+
 def app=""
 def env=""
 def cmd=""
 
+def dh = new deployhub();
 
 node {
     
@@ -19,15 +22,19 @@ node {
       echo "**********************************************************************************"    
       echo "* Moving $app from Integration to Testing from Development"
       echo "**********************************************************************************"
-      cmd = /dhmove.py --app ${app} --from_domain 'GLOBAL.My Pipeline.Development' --task 'Move to Integration'/
-      sh cmd
+						
+      def data = dh.moveApplication("http://rocket:8080","admin","admin",${app},"GLOBAL.My Pipeline.Development","Move to Integration");
+      println(data[0]);
+      println(data[1]);
       
       echo "**********************************************************************************"    
       echo "* Deploying $app to Integration"
       echo "**********************************************************************************"
-      cmd = /dhdeploy.py --app ${app} --env 'Uptime Integration'/
-      sh cmd
-      
+						
+						data = dh.deployApplication("http://rocket:8080","admin","admin",${app},"IT Guys Int");
+      println(data[0]);
+      println(data[1]);
+						
       echo "**********************************************************************************"
       echo "* Running Testcases for $app in Integration"
       echo "**********************************************************************************"
@@ -39,33 +46,36 @@ node {
       echo "**********************************************************************************"    
       echo "* Moving $app from Integration to Testing"
       echo "**********************************************************************************"
-      cmd = /dhmove.py --app ${app} --from_domain 'GLOBAL.My Pipeline.Integration' --task 'Move to Testing'/
-      sh cmd        
-        
-      echo "**********************************************************************************"        
-      echo "* Deploying $app to Testing"
+      def data = dh.moveApplication("http://rocket:8080","admin","admin",${app},"GLOBAL.My Pipeline.Initegration","Move to Testing");
+      println(data[0]);
+      println(data[1]);
+      
+      echo "**********************************************************************************"    
+      echo "* Deploying $app to Integration"
       echo "**********************************************************************************"
-      cmd = /dhdeploy.py --app ${app} --env 'Uptime Testing'/
-      sh cmd
-
-      echo "**********************************************************************************"    
-      echo "* Running Testcases for $app in Testing"
-      echo "**********************************************************************************"    
-      cmd = /runtestcases.py --app ${app} --env Testing/
+						
+						data = dh.deployApplication("http://rocket:8080","admin","admin",${app},"IT Guys Test");
+      println(data[0]);
+      println(data[1]);
+						
+      echo "**********************************************************************************"
+      echo "* Running Testcases for $app in Test"
+      echo "**********************************************************************************"
+      cmd = /runtestcases.py --app ${app} --env Test/
       sh cmd
     }
     
     stage ('Production') {
+      def data = dh.moveApplication("http://rocket:8080","admin","admin",${app},"GLOBAL.My Pipeline.Test","Move to Prodution");
+      println(data[0]);
+      println(data[1]);
+      
       echo "**********************************************************************************"    
-      echo "* Moving $app from Testing to Production"
-      echo "**********************************************************************************"    
-      cmd = /dhmove.py --app ${app} --from_domain 'GLOBAL.My Pipeline.Testing' --task 'Move to Production'/
-      sh cmd     
-
-      echo "**********************************************************************************"        
       echo "* Deploying $app to Production"
       echo "**********************************************************************************"
-      cmd = /dhdeploy.py --app ${app} --env 'Uptime Production'/
-      sh cmd  
+						
+						data = dh.deployApplication("http://rocket:8080","admin","admin",${app},"IT Guys Prod");
+      println(data[0]);
+      println(data[1]);
     }
 }
