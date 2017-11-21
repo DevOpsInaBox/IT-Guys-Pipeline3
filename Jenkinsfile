@@ -47,7 +47,8 @@ node {
       echo "**********************************************************************************"
       echo "* Running Testcases for $app in Integration"
       echo "**********************************************************************************"
-      sh "uname > out.txt"
+						cmd = "runtestcases.py --app \"${app}\" --env Integration"
+      sh cmd
     }  
     
 }
