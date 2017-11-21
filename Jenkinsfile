@@ -16,14 +16,14 @@ node {
     
     stage ('Integration') {
       def lines=readFile('Deployfile').trim().split("\n");
-      app=lines[1].split(':')[1].trim()
+      app=lines[1].split(':')[1].trim().trim('"')
       env=lines[2].split(':')[1].trim()      
       
       echo "**********************************************************************************"    
       echo "* Moving $app from Integration to Testing from Development"
       echo "**********************************************************************************"
 						
-      def data = dh.moveApplication("http://rocket:8080","admin","admin", "IT Guys;4" ,"GLOBAL.My Pipeline.Development","Move to Integration");
+      def data = dh.moveApplication("http://rocket:8080","admin","admin", $app ,"GLOBAL.My Pipeline.Development","Move to Integration");
       println(data[0]);
       println(data[1]);
       
@@ -31,7 +31,7 @@ node {
       echo "* Deploying $app to Integration"
       echo "**********************************************************************************"
 						
-						data = dh.deployApplication("http://rocket:8080","admin","admin","IT Guys;4","IT Guys Int");
+						data = dh.deployApplication("http://rocket:8080","admin","admin",$app, "IT Guys Int");
       println(data[0]);
       println(data[1]);
 						
