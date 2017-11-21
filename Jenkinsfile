@@ -39,7 +39,7 @@ node {
       echo "**********************************************************************************"
       echo "* Running Testcases for $app in Integration"
       echo "**********************************************************************************"
-      cmd = /runtestcases.py --app ${app} --env Integration/
+      cmd = /runtestcases.py --app "${app}" --env Integration/
       sh cmd
     }  
     
