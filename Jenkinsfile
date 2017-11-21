@@ -16,7 +16,7 @@ node {
     
     stage ('Integration') {
       def lines=readFile('Deployfile').trim().split("\n");
-      app=lines[1].split(':')[1].trim().trim('"')
+      app=lines[1].split(':')[1].trim().replaceAll("^\"+", "").replaceAll("\"+$", "");
       env=lines[2].split(':')[1].trim()      
       
       echo "**********************************************************************************"    
