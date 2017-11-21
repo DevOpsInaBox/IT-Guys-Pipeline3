@@ -1,0 +1,3 @@
+deploy:
+   application: "Uptime War for Tomcat;12"
+   environment: "Uptime Integration"
