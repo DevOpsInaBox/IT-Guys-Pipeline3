@@ -43,6 +43,8 @@ node {
 						data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Int");
       println(data[0]);
       println(data[1]);
+						def deploymentid = data[1]['deploymentid'];
+						echo "Deploment #$deploymentid";
 						
       echo "**********************************************************************************"
       echo "* Running Testcases for $app in Integration"
@@ -72,6 +74,8 @@ node {
 						data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Test");
       println(data[0]);
       println(data[1]);
+						def deploymentid = data[1]['deploymentid'];
+						echo "Deploment #$deploymentid";
 						
       echo "**********************************************************************************"
       echo "* Running Testcases for $app in Testing"
@@ -101,5 +105,7 @@ node {
 					data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Prod");
      println(data[0]);
      println(data[1]);
+					def deploymentid = data[1]['deploymentid'];
+					echo "Deploment #$deploymentid";
    }	
 }
