@@ -36,9 +36,10 @@ node {
 								if (data[0])
 								{
 						   def deploymentid = data[1]['deploymentid'];
-						   echo "Deploment #$deploymentid";
+
 									data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
-						  
+						   println("Deployment Logs for #$deploymentid\n" + data[1]);
+									
          echo "Running Testcases for $app in Integration"
 						   cmd = "runtestcases.py --app \"${app}\" --env Integration"
          sh cmd
@@ -65,29 +66,33 @@ node {
       env=lines[2].split(':')[1].trim() 
 						app=app.substring(1, app.length() - 1)					  
  
-      echo "**********************************************************************************"    
-      echo "* Moving $app from Integration to Testing"
-      echo "**********************************************************************************"
+      echo "Moving $app from Integration to Testing"
 						
       data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Integration","Move to Testing");
-      println(data[0]);
-      println(data[1]);
-      
-      echo "**********************************************************************************"    
-      echo "* Deploying $app to Testing"
-      echo "**********************************************************************************"
+						if (data[0])
+						{
+       echo "Deploying $app to Testing"
 						
-						data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Test");
-      println(data[0]);
-      println(data[1]);
-						def deploymentid = data[1]['deploymentid'];
-						echo "Deploment #$deploymentid";
+						 data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Test");
+							if (data[0])
+							{
+						  def deploymentid = data[1]['deploymentid'];
+							 data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
+						  println("Deployment Logs for #$deploymentid\n" + data[1]);
 						
-      echo "**********************************************************************************"
-      echo "* Running Testcases for $app in Testing"
-      echo "**********************************************************************************"
-						cmd = "runtestcases.py --app \"${app}\" --env Testing"
-      sh cmd
+        echo "Running Testcases for $app in Testing"
+						  cmd = "runtestcases.py --app \"${app}\" --env Testing"
+        sh cmd
+							}
+							else
+							{
+							 error(data[1]);
+							}	
+						}
+						else
+						{
+						 error(data[1]);
+						}	
     }
 				
    stage ('Prod') {
@@ -96,22 +101,28 @@ node {
      env=lines[2].split(':')[1].trim() 
 					app=app.substring(1, app.length() - 1)					  
 
-     echo "**********************************************************************************"    
-     echo "* Moving $app from Testing to Prod"
-     echo "**********************************************************************************"
+     echo "Moving $app from Testing to Prod"
 					
      data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Testing","Move to Production");
-     println(data[0]);
-     println(data[1]);
-     
-     echo "**********************************************************************************"    
-     echo "* Deploying $app to Prod"
-     echo "**********************************************************************************"
+     if (data[0])
+					{ 
+      echo "Deploying $app to Prod"
 					
-					data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Prod");
-     println(data[0]);
-     println(data[1]);
-					def deploymentid = data[1]['deploymentid'];
-					echo "Deploment #$deploymentid";
+					 data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Prod");
+      if (data[0])
+      {
+						 def deploymentid = data[1]['deploymentid'];
+						 data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
+						 println("Deployment Logs for #$deploymentid\n" + data[1]);
+						}
+						else
+						{
+						 error(data[1]);
+						}	
+					}
+					else
+					{
+					 error(data[1]);
+					}
    }	
 }
