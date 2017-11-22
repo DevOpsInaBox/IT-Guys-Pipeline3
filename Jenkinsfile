@@ -76,7 +76,7 @@ node {
       echo "**********************************************************************************"
       echo "* Running Testcases for $app in Testing"
       echo "**********************************************************************************"
-						cmd = "runtestcases.py --app \"${app}\" --env Test"
+						cmd = "runtestcases.py --app \"${app}\" --env Testing"
       sh cmd
     }
 				
