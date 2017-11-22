@@ -35,9 +35,8 @@ node {
 						  data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Int");
 								if (data[0])
 								{
-									echo "Deployment Logs for #$deploymentid"
 						   def deploymentid = data[1]['deploymentid'];
-
+									echo "Deployment Logs for #$deploymentid"
 									data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
 									echo data[1];
 									
@@ -77,8 +76,8 @@ node {
 						 data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Test");
 							if (data[0])
 							{
-								echo "Deployment Logs for #$deploymentid"
 						  def deploymentid = data[1]['deploymentid'];
+								echo "Deployment Logs for #$deploymentid"
 							 data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
 
 								echo data[1];
@@ -114,8 +113,8 @@ node {
 					 data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Prod");
       if (data[0])
       {
-						 echo "Deployment Logs for #$deploymentid"
 						 def deploymentid = data[1]['deploymentid'];
+							echo "Deployment Logs for #$deploymentid"
 						 data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
 							echo data[1];
 						}
