@@ -25,32 +25,46 @@ node {
       echo "**********************************************************************************"
 						
       def data = dh.approveApplication("http://rocket:8080","admin","admin", app);
-      println(data[0]);
-      println(data[1]);	     
+						if (data[0])
+						{
+       echo "**********************************************************************************"    
+       echo "* Moving $app from Development to Integration"
+       echo "**********************************************************************************"
 						
-      echo "**********************************************************************************"    
-      echo "* Moving $app from Development to Integration"
-      echo "**********************************************************************************"
+       data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Development","Move to Integration");
+							if (data[0])
+							{
+        echo "**********************************************************************************"    
+        echo "* Deploying $app to Integration"
+        echo "**********************************************************************************"
 						
-      data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Development","Move to Integration");
-      println(data[0]);
-      println(data[1]);
-      
-      echo "**********************************************************************************"    
-      echo "* Deploying $app to Integration"
-      echo "**********************************************************************************"
-						
-						data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Int");
-      println(data[0]);
-      println(data[1]);
-						def deploymentid = data[1]['deploymentid'];
-						echo "Deploment #$deploymentid";
-						
-      echo "**********************************************************************************"
-      echo "* Running Testcases for $app in Integration"
-      echo "**********************************************************************************"
-						cmd = "runtestcases.py --app \"${app}\" --env Integration"
-      sh cmd
+						  data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Int");
+								if (data[0])
+								{
+						   def deploymentid = data[1]['deploymentid'];
+						   echo "Deploment #$deploymentid";
+									data = dh.getLogs("http://rocket:8080","admin","admin",deploymentid);
+						  
+         echo "**********************************************************************************"
+         echo "* Running Testcases for $app in Integration"
+         echo "**********************************************************************************"
+						   cmd = "runtestcases.py --app \"${app}\" --env Integration"
+         sh cmd
+								}
+								else
+								{
+									error(data[1]);
+								}	
+							}
+							else
+							{
+							 error(data[1]);
+							}	
+						}
+						else
+						{
+						 error(data[1]);
+						}	
     }  
     
     stage ('Test') {
