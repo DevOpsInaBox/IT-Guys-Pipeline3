@@ -35,10 +35,11 @@ node {
 						  data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Int");
 								if (data[0])
 								{
+									echo "Deployment Logs for #$deploymentid"
 						   def deploymentid = data[1]['deploymentid'];
 
 									data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
-						   echo("Deployment Logs for #$deploymentid\n" + data[1]);
+									echo data[1];
 									
          echo "Running Testcases for $app in Integration"
 						   cmd = "runtestcases.py --app \"${app}\" --env Integration"
@@ -76,9 +77,11 @@ node {
 						 data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Test");
 							if (data[0])
 							{
+								echo "Deployment Logs for #$deploymentid"
 						  def deploymentid = data[1]['deploymentid'];
 							 data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
-						  echo("Deployment Logs for #$deploymentid\n" + data[1]);
+
+								echo data[1];
 						
         echo "Running Testcases for $app in Testing"
 						  cmd = "runtestcases.py --app \"${app}\" --env Testing"
@@ -111,9 +114,10 @@ node {
 					 data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Prod");
       if (data[0])
       {
+						 echo "Deployment Logs for #$deploymentid"
 						 def deploymentid = data[1]['deploymentid'];
 						 data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
-						 echo("Deployment Logs for #$deploymentid\n" + data[1]);
+							echo data[1];
 						}
 						else
 						{
