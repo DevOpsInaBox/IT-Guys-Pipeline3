@@ -37,7 +37,7 @@ node {
 								{
 						   def deploymentid = data[1]['deploymentid'];
 						   echo "Deploment #$deploymentid";
-									data = dh.getLogs("http://rocket:8080","admin","admin",'$deploymentid");
+									data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
 						  
          echo "Running Testcases for $app in Integration"
 						   cmd = "runtestcases.py --app \"${app}\" --env Integration"
