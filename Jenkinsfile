@@ -41,7 +41,7 @@ node {
          def deploymentid = data[1]['deploymentid'];
 									def done = 0;
 						
-									def data2 = isDeploymentDone(url, userid, pw, deploymentid);
+									def data2 = isDeploymentDone(url, user, pw, deploymentid);
 									echo data2;
 									
          echo "Deployment Logs for #$deploymentid"
