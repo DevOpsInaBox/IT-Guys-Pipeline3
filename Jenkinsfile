@@ -40,7 +40,6 @@ node {
         {
          def deploymentid = data[1]['deploymentid'];
 									def done = 0;
-									def deploymentid = data['deploymentid'];
 						
 									def data2 = isDeploymentDone(url, userid, pw, deploymentid);
 									echo data2;
