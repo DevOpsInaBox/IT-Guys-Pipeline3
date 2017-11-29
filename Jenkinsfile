@@ -40,7 +40,7 @@ node {
         {
          def deploymentid = data[1]['deploymentid'];
 									def done = 0;
-						   echo deploymentid;
+						   echo "$deploymentid";
 									
 									def data2 = dh.isDeploymentDone(url, user, pw, "$deploymentid");
 									echo data2;
