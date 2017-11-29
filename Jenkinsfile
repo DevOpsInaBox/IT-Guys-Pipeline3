@@ -5,6 +5,9 @@
 def app=""
 def env=""
 def cmd=""
+def url="http://rocket:8080"
+def user="admin"
+def pw="admin"
 
 def dh = new deployhub();
 
@@ -22,22 +25,28 @@ node {
  
       echo "Approving $app for Integration"
       
-      def data = dh.approveApplication("http://rocket:8080","admin","admin", app);
+      def data = dh.approveApplication(url,user,pw, app);
       if (data[0])
       {
        echo "Moving $app from Development to Integration"
      
-       data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Development","Move to Integration");
+       data = dh.moveApplication(url,user,pw, app ,"GLOBAL.My Pipeline.Development","Move to Integration");
        if (data[0])
        {
         echo "Deploying $app to Integration"
       
-        data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Int");
+        data = dh.deployApplication(url,user,pw, app, "IT Guys Int");
         if (data[0])
         {
          def deploymentid = data[1]['deploymentid'];
+									def done = 0;
+									def deploymentid = data['deploymentid'];
+						
+									def data2 = isDeploymentDone(url, userid, pw, deploymentid);
+									echo data2;
+									
          echo "Deployment Logs for #$deploymentid"
-         data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
+         data = dh.getLogs(url,user,pw, "$deploymentid");
          echo data[1];
          
          echo "Running Testcases for $app in Integration"
@@ -68,17 +77,17 @@ node {
  
       echo "Moving $app from Integration to Testing"
       
-      data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Integration","Move to Testing");
+      data = dh.moveApplication(url,user,pw, app ,"GLOBAL.My Pipeline.Integration","Move to Testing");
       if (data[0])
       {
        echo "Deploying $app to Testing"
       
-       data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Test");
+       data = dh.deployApplication(url,user,pw, app, "IT Guys Test");
        if (data[0])
        {
         def deploymentid = data[1]['deploymentid'];
         echo "Deployment Logs for #$deploymentid"
-        data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
+        data = dh.getLogs(url,user,pw,"$deploymentid");
 
         echo data[1];
       
@@ -105,17 +114,17 @@ node {
 
      echo "Moving $app from Testing to Prod"
      
-     data = dh.moveApplication("http://rocket:8080","admin","admin", app ,"GLOBAL.My Pipeline.Testing","Move to Production");
+     data = dh.moveApplication(url,user,pw, app ,"GLOBAL.My Pipeline.Testing","Move to Production");
      if (data[0])
      { 
       echo "Deploying $app to Prod"
      
-      data = dh.deployApplication("http://rocket:8080","admin","admin", app, "IT Guys Prod");
+      data = dh.deployApplication(url,user,pw, app, "IT Guys Prod");
       if (data[0])
       {
        def deploymentid = data[1]['deploymentid'];
        echo "Deployment Logs for #$deploymentid"
-       data = dh.getLogs("http://rocket:8080","admin","admin","$deploymentid");
+       data = dh.getLogs(url,user,pw,"$deploymentid");
        echo data[1];
       }
       else
