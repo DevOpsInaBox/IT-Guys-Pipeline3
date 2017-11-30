@@ -41,9 +41,7 @@ node {
          def deploymentid = data[1]['deploymentid'];
 									def done = 0;
 									
-									def data2 = dh.isDeploymentDone(url, user, pw, "$deploymentid");
-									echo data2;
-									
+								
          echo "Deployment Logs for #$deploymentid"
          data = dh.getLogs(url,user,pw, "$deploymentid");
          echo data[1];
