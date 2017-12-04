@@ -39,6 +39,7 @@ node {
         if (data[0])
         {
          def deploymentid = data[1]['deploymentid'];
+									echo "Deployment Logs for #$deploymentid"
 									def done = 0;
 									
 									while (done == 0)
