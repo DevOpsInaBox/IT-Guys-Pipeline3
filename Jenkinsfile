@@ -47,7 +47,8 @@ node {
 									
 									 if (res[0])
 									 {
-										 echo res[1];
+										 def s = res[1];
+											echo "$s";
 									  if (res[1]['success'])
 											{
 											 done = 1;
