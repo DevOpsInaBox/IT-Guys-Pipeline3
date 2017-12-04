@@ -39,32 +39,7 @@ node {
         if (data[0])
         {
          def deploymentid = data[1]['deploymentid'];
-									echo "Deployment Logs for #$deploymentid"
-									def done = 0;
-									
-									while (done == 0)
-									{
-								  def res = dh.isDeploymentDone(url, user, pw, "$deploymentid");
-									
-									 if (res[0])
-									 {
-										 def s = res[1];
-											echo "$s";
-									  if (res[1]['success'])
-											{
-											 done = 1;
-											}
-											else
-											{
-											 sleep 10
-											}
-									 }
-										else
-										{
-										 echo res[1];
-											done = 1;
-										}
-									}	
+
          echo "Deployment Logs for #$deploymentid"
          data = dh.getLogs(url,user,pw, "$deploymentid");
          echo data[1];
