@@ -47,6 +47,7 @@ node {
 									
 									 if (res[0])
 									 {
+										 echo res[1]['success']
 									  if (res[1]['success'])
 											{
 											 done = 1;
