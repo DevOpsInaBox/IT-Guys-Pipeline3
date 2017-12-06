@@ -34,7 +34,9 @@ node {
        if (data[0])
        {
         echo "Deploying $app to Integration"
-      
+        
+        dh.forceDeployIfNeeded(url,user,pw, app, "IT Guys Int");
+        
         data = dh.deployApplication(url,user,pw, app, "IT Guys Int");
         if (data[0])
         {
@@ -76,7 +78,9 @@ node {
       if (data[0])
       {
        echo "Deploying $app to Testing"
-      
+        
+       dh.forceDeployIfNeeded(url,user,pw, app, "IT Guys Test");
+              
        data = dh.deployApplication(url,user,pw, app, "IT Guys Test");
        if (data[0])
        {
@@ -113,6 +117,8 @@ node {
      if (data[0])
      { 
       echo "Deploying $app to Prod"
+     
+      dh.forceDeployIfNeeded(url,user,pw, app, "IT Guys Prod");     
      
       data = dh.deployApplication(url,user,pw, app, "IT Guys Prod");
       if (data[0])
