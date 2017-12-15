@@ -5,7 +5,7 @@
 def app=""
 def env=""
 def cmd=""
-def url="http://rocket:8080"
+def url="http://digin.deployhubpro.com"
 def user="admin"
 def pw="admin"
 
