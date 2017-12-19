@@ -5,7 +5,7 @@
 def app=""
 def env=""
 def cmd=""
-def url="http://rocket:8080"
+def url=""
 def user="admin"
 def pw="admin"
 
@@ -13,6 +13,8 @@ def dh = new deployhub();
 
 node {
     
+    url = dh.getURL();
+	
     stage('Clone sources') {
         git url: 'https://github.com/OpenMake-Software/IT-Guys-Pipeline.git'
     }
@@ -23,9 +25,6 @@ node {
       env=lines[2].split(':')[1].trim() 
       app=app.substring(1, app.length() - 1)       
  
-      error(env);
-      def matcher = readFile("${env.JENKINS_HOME}/org.jenkinsci.plugins.deployhub.DeployHub.xml") =~ '<serverURL>.*</serverURL>'
-	  error(matcher);
       echo "Approving $app for Integration"
       
       def data = dh.approveApplication(url,user,pw, app);
