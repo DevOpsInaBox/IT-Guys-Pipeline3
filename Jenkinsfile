@@ -13,7 +13,7 @@ def dh = new deployhub();
 
 node {
     
-    url = dh.getURL();
+    url = dh.getURL(env);
 	
     stage('Clone sources') {
         git url: 'https://github.com/OpenMake-Software/IT-Guys-Pipeline.git'
