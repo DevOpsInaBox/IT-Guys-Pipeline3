@@ -23,6 +23,7 @@ node {
       env=lines[2].split(':')[1].trim() 
       app=app.substring(1, app.length() - 1)       
  
+      error(env);
       def matcher = readFile("${env.JENKINS_HOME}/org.jenkinsci.plugins.deployhub.DeployHub.xml") =~ '<serverURL>.*</serverURL>'
 	  error(matcher);
       echo "Approving $app for Integration"
