@@ -49,7 +49,7 @@ node {
          echo data[1];
          
          echo "Running Testcases for $app in Integration"
-         cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER}"
+         cmd = "runtestcases.py --app \"${app}\" --env Integration --success 80 --build ${env.BUILD_NUMBER}"
          def r = sh script: cmd, returnStatus: true
 	 
 	 if (r != 0) /* ROLLBACK */
@@ -63,7 +63,7 @@ node {
            data = dh.getLogs(url,user,pw, "$deploymentid");
            echo data[1];
 	  }
-          return
+          sh "exit ${r}" 
 	 }
         }
         else
@@ -121,7 +121,7 @@ node {
            data = dh.getLogs(url,user,pw, "$deploymentid");
            echo data[1];
 	  }
-          return	  
+          sh "exit ${r}" 	  
 	 }
        }
        else
