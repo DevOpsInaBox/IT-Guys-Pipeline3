@@ -50,7 +50,8 @@ node {
          
          echo "Running Testcases for $app in Integration"
          cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER}"
-         sh cmd
+         def r = sh script: cmd, returnStatus: true
+	 echo "RC=$r"
         }
         else
         {
