@@ -54,7 +54,7 @@ node {
 	 
 	 if (r != 0) /* ROLLBACK */
 	 {
-          data = dh.deployApplication(url,user,pw, app, "IT Guys Int;2");
+          data = dh.deployApplication(url,user,pw, "IT Guys;2", "IT Guys Int");
           if (data[0])
           {
            deploymentid = data[1]['deploymentid'];
@@ -62,8 +62,8 @@ node {
            echo "ROLLBACK: Deployment Logs for #$deploymentid"
            data = dh.getLogs(url,user,pw, "$deploymentid");
            echo data[1];
-	   return
-	  }	  
+	  }
+          return
 	 }
         }
         else
@@ -112,7 +112,7 @@ node {
 	 
 	 if (r != 0) /* ROLLBACK */
 	 {
-          data = dh.deployApplication(url,user,pw, app, "IT Guys Int;2");
+          data = dh.deployApplication(url,user,pw, "IT Guys;2", "IT Guys Test");
           if (data[0])
           {
            def deploymentid = data[1]['deploymentid'];
@@ -120,8 +120,8 @@ node {
            echo "ROLLBACK: Deployment Logs for #$deploymentid"
            data = dh.getLogs(url,user,pw, "$deploymentid");
            echo data[1];
-	   return
-	  }	  
+	  }
+          return	  
 	 }
        }
        else
