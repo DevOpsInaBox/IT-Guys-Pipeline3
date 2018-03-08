@@ -57,7 +57,7 @@ node {
           data = dh.deployApplication(url,user,pw, app, "IT Guys Int;2");
           if (data[0])
           {
-           def deploymentid = data[1]['deploymentid'];
+           deploymentid = data[1]['deploymentid'];
 
            echo "ROLLBACK: Deployment Logs for #$deploymentid"
            data = dh.getLogs(url,user,pw, "$deploymentid");
@@ -100,7 +100,7 @@ node {
        data = dh.deployApplication(url,user,pw, app, "IT Guys Test");
        if (data[0])
        {
-        def deploymentid = data[1]['deploymentid'];
+        deploymentid = data[1]['deploymentid'];
         echo "Deployment Logs for #$deploymentid"
         data = dh.getLogs(url,user,pw,"$deploymentid");
 
