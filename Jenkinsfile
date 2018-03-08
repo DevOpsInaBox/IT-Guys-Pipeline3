@@ -49,7 +49,7 @@ node {
          echo data[1];
          
          echo "Running Testcases for $app in Integration"
-         cmd = "runtestcases.py --app \"${app}\" --env Integration"
+         cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER}"
          sh cmd
         }
         else
@@ -93,7 +93,7 @@ node {
         echo data[1];
       
         echo "Running Testcases for $app in Testing"
-        cmd = "runtestcases.py --app \"${app}\" --env Testing"
+        cmd = "runtestcases.py --app \"${app}\" --env Testing --success 100 --build ${env.BUILD_NUMBER}"
         sh cmd
        }
        else
