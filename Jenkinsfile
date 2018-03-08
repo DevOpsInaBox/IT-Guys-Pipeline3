@@ -51,7 +51,20 @@ node {
          echo "Running Testcases for $app in Integration"
          cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER}"
          def r = sh script: cmd, returnStatus: true
-	 echo "RC=$r"
+	 
+	 if (r != 0) /* ROLLBACK */
+	 {
+          data = dh.deployApplication(url,user,pw, app, "IT Guys Int;2");
+          if (data[0])
+          {
+           def deploymentid = data[1]['deploymentid'];
+
+           echo "ROLLBACK: Deployment Logs for #$deploymentid"
+           data = dh.getLogs(url,user,pw, "$deploymentid");
+           echo data[1];
+	   return
+	  }	  
+	 }
         }
         else
         {
@@ -95,7 +108,21 @@ node {
       
         echo "Running Testcases for $app in Testing"
         cmd = "runtestcases.py --app \"${app}\" --env Testing --success 100 --build ${env.BUILD_NUMBER}"
-        sh cmd
+         def r = sh script: cmd, returnStatus: true
+	 
+	 if (r != 0) /* ROLLBACK */
+	 {
+          data = dh.deployApplication(url,user,pw, app, "IT Guys Int;2");
+          if (data[0])
+          {
+           def deploymentid = data[1]['deploymentid'];
+
+           echo "ROLLBACK: Deployment Logs for #$deploymentid"
+           data = dh.getLogs(url,user,pw, "$deploymentid");
+           echo data[1];
+	   return
+	  }	  
+	 }
        }
        else
        {
