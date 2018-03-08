@@ -50,13 +50,7 @@ node {
          
          echo "Running Testcases for $app in Integration"
          cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER}"
-         def statusCode = sh cmd
-	 echo "RC=$statusCode"
-	 if( $statusCode != 0 ) 
-	 {
-          currentBuild.result = 'FAILURE'
-          return
-         }
+         sh cmd
         }
         else
         {
@@ -100,13 +94,7 @@ node {
       
         echo "Running Testcases for $app in Testing"
         cmd = "runtestcases.py --app \"${app}\" --env Testing --success 100 --build ${env.BUILD_NUMBER}"
-        def statusCode = sh cmd
-	 
-        if( $statusCode != 0 ) 
-        {
-         currentBuild.result = 'FAILURE'
-         return
-        }
+        sh cmd
        }
        else
        {
