@@ -49,7 +49,7 @@ node {
          echo data[1];
          
          echo "Running Testcases for $app in Integration"
-         cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER} --job \"${env.JOB_NAME}\""
+         cmd = "runtestcases.py --app \"${app}\" --env Integration --success 50 --build ${env.BUILD_NUMBER} --job \"${env.JOB_NAME}\""
          def r = sh script: cmd, returnStatus: true
 	 echo "RC=$r"
 		
