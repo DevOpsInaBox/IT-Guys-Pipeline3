@@ -51,7 +51,8 @@ node {
          echo "Running Testcases for $app in Integration"
          cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER} --job \"${env.JOB_NAME}\""
          def r = sh script: cmd, returnStatus: true
-	 
+	 echo "RC=$r"
+		
 	 if (r != 0) /* ROLLBACK */
 	 {
           data = dh.deployApplication(url,user,pw, "IT Guys;2", "IT Guys Int");
@@ -109,7 +110,8 @@ node {
         echo "Running Testcases for $app in Testing"
         cmd = "runtestcases.py --app \"${app}\" --env Testing --success 100 --build ${env.BUILD_NUMBER} --job \"${env.JOB_NAME}\""
          def r = sh script: cmd, returnStatus: true
-	 
+	 echo "RC=$r"
+	       
 	 if (r != 0) /* ROLLBACK */
 	 {
           data = dh.deployApplication(url,user,pw, "IT Guys;2", "IT Guys Test");
