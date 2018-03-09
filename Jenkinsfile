@@ -49,7 +49,8 @@ node {
          echo data[1];
          
          echo "Running Testcases for $app in Integration"
-         cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER}"
+         cmd = "runtestcases.py --app \"${app}\" --env Integration --success 100 --build ${env.BUILD_NUMBER} --job \"${env.JOB_NAME
+		Name}\""
          def r = sh script: cmd, returnStatus: true
 	 
 	 if (r != 0) /* ROLLBACK */
@@ -107,7 +108,8 @@ node {
         echo data[1];
       
         echo "Running Testcases for $app in Testing"
-        cmd = "runtestcases.py --app \"${app}\" --env Testing --success 100 --build ${env.BUILD_NUMBER}"
+        cmd = "runtestcases.py --app \"${app}\" --env Testing --success 100 --build ${env.BUILD_NUMBER} --job \"${env.JOB_NAME
+		Name}\""
          def r = sh script: cmd, returnStatus: true
 	 
 	 if (r != 0) /* ROLLBACK */
